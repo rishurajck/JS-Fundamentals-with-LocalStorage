@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Validation</title>
+    <style>
+      #studentTable,
+      th,
+      tr,
+      .rowData .studData {
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+      }
+      th {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Student Marks Table</h1>
+      <button id="sub-btn" type="button">Add Student</button>
+    </header>
+    <table id="studentTable">
+      <thead>
+        <tr>
+          <th>Student name</th>
+          <th>Subject 1</th>
+          <th>Subject 2</th>
+          <th>Subject 3</th>
+          <th>Subject 4</th>
+          <th>Subject 5</th>
+          <th>Total Marks</th>
+          <th>Average Marks</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <script>
+      let btn = document.getElementById("sub-btn");
+      btn.addEventListener("click", clickme);
+      let students = JSON.parse(localStorage.getItem("obj")) || [];
+
+      function clickme() {
+        let studName = prompt("Enter the Student Name: ");
+        if (studName === " " || !isNaN(studName)) {
+          alert("Missing Details");
+          return;
+        }
+        let m1 = parseInt(prompt("Enter the Marks of Subject 1: "));
+        if (isNaN(m1) || m1 >= 101 || m1 <= 0) {
+          alert("Missing Details");
+          return;
+        }
+        let m2 = parseInt(prompt("Enter the Marks of Subject 2: "));
+        if (isNaN(m2) || m2 >= 101 || m2 <= 0) {
+          alert("Missing Details");
+          return;
+        }
+        let m3 = parseInt(prompt("Enter the Marks of Subject 3: "));
+        if (isNaN(m3) || m3 >= 101 || m3 <= 0) {
+          alert("Missing Details");
+          return;
+        }
+        let m4 = parseInt(prompt("Enter the Marks of Subject 4: "));
+        if (isNaN(m4) || m4 >= 101 || m4 <= 0) {
+          alert("Missing Details");
+          return;
+        }
+        let m5 = parseInt(prompt("Enter the Marks of Subject 5: "));
+        if (isNaN(m5) || m5 >= 101 || m5 <= 0) {
+          alert("Missing Details");
+          return;
+        }
+
+        let totalMarks = m1 + m2 + m3 + m4 + m5;
+        let avgMarks = totalMarks / 5;
+
+        let student = {
+          studentName: studName,
+          Subject1: m1,
+          Subject2: m2,
+          Subject3: m3,
+          Subject4: m4,
+          Subject5: m5,
+          total: totalMarks,
+          avg: avgMarks,
+        };
+        students.push(student);
+        localStorage.setItem("obj", JSON.stringify(students));
+
+        render();
+      }
+      function render() {
+        document.getElementById("tableBody").innerHTML = "";
+        students.forEach((student) => {
+          let trCreate = document.createElement("tr");
+          trCreate.classList.add("rowData");
+          for (let key in student) {
+            if (student.hasOwnProperty(key)) {
+              let tdCreate = document.createElement("td");
+              tdCreate.classList.add("studData");
+              value = student[key];
+              tdCreate.textContent = value;
+              trCreate.appendChild(tdCreate);
+            }
+          }
+          document.getElementById("tableBody").appendChild(trCreate);
+        });
+      }
+      render();
+    </script>
+  </body>
+</html>

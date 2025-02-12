@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Js Fundamentals</title>
+    <style>
+      #box {
+        height: 50px;
+        width: 50px;
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" onsubmit="display(event)">
+      <label for="fname">Enter Name</label>
+      <input type="text" name="name" id="fname" />
+      <label for="tage">Enter your age</label>
+      <input type="number" name="age" id="tage" />
+      <input type="submit" value="submit" name="submit" />
+    </form>
+    <div id="data"></div>
+    <div id="box" onmouseover="chngclr()" onmouseleave="revclr()"></div>
+    <div id="array"></div>
+    <div id="ele-end"></div>
+    <div id="ele-strt"></div>
+    <div id="replace"></div>
+    <div id="n-pos"></div>
+    <div id="sort"></div>
+    <div id="rev"></div>
+    <div id="idx"></div>
+   <script>
+    function display(event) {
+  event.preventDefault();
+  console.log("fiunction started");
+  var fname = document.getElementById("fname").value;
+  var fage = document.getElementById("tage").value;
+  console.log(fname, fage);
+  if (fname) {
+    if (fage >= 18) {
+      var nname = document.getElementById("data");
+      nname.innerHTML = fname + fage;
+    } else {
+      alert("Not valid");
+    }
+  } else {
+    alert("Not Valid");
+  }
+}
+function chngclr() {
+  var clr = document.getElementById("box");
+  clr.style.backgroundColor = "#c5c5c5";
+}
+
+function revclr() {
+  var clr = document.getElementById("box");
+  clr.style.backgroundColor = "#fff";
+}
+
+var arr = [5, 1, 2, 5, 6, 8];
+var oriArr = document.getElementById("array");
+oriArr.innerHTML = arr + "-->" + "Array Iteration";
+
+arr.push(10);
+document.getElementById("ele-end").innerHTML =
+  arr + " --> " + "Element adding with push operation";
+
+arr.unshift(8);
+document.getElementById("ele-strt").innerHTML =
+  arr + " --> " + "Element adding with unshift operation";
+
+arr.splice(3, 0, 98);
+document.getElementById("n-pos").innerHTML =
+  arr + "-->" + "giving the nth-pos using splice operation";
+
+var narr = arr.map((num) => (num === 5 ? 99 : num));
+document.getElementById("replace").innerHTML =
+  narr + " -->" + "Element is replacing using ternary operator";
+
+function sorting(arr) {
+  var pivot = arr[0];
+  var left = [];
+  var right = [];
+
+  for (var i = 1; i < arr.length; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]);
+    } else {
+      right.push(arr[i]);
+    }
+  }
+  return (left.length ? sorting(left) : []).concat(
+    pivot,
+    right.length ? sorting(right) : []
+  );
+}
+
+var temparr = sorting(arr);
+document.getElementById("sort").innerHTML =
+  temparr + "-->" + "using merge sort and returning the array";
+
+function reversearr(arr) {
+  var temp1 = [];
+  var n = arr.length;
+  for (var j = 0; j < n; j++) {
+    temp1[j] = arr[n - j - 1];
+  }
+  return temp1;
+}
+document.getElementById("rev").innerHTML =
+  reversearr(arr) + "--> " + "reversing the array using another array";
+
+var indexele = document.getElementById("idx");
+indexele.innerHTML =
+  arr.indexOf(98) + "-->" + "Returning the index value of the given Element";
+
+   </script>
+</html>
